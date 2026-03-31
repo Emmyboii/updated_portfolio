@@ -67,9 +67,9 @@ const Footer = () => {
             {/* Logo */}
             <a href="/" className="flex items-center gap-2">
               <img
-                src="/src/assets/mylogo.png"
+                src="/src/assets/logo2.png"
                 alt="logo"
-                className="w-24 h-24 object-contain"
+                className="sm:w-48 w-36 object-contain"
               />
             </a>
 

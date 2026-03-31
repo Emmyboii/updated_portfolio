@@ -10,14 +10,14 @@ function Navbar() {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg bg-black/40 border-b border-white/10">
       
-      <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         
         {/* Logo */}
         <a href="/" className="flex items-center gap-2">
           <img
-            src="/src/assets/mylogo.png"
+            src="/src/assets/logo2.png"
             alt="logo"
-            className="sm:w-24 w-16 h-16 sm:h-24 object-contain"
+            className="sm:w-48 w-36 object-contain"
           />
         </a>
 

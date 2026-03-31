@@ -53,6 +53,13 @@ function Hero() {
   return (
     <section id="home" className="relative min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#110a1f] to-[#0a0a0a] flex items-center justify-center px-6 overflow-hidden">
 
+      <div
+        className="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/src/assets/logo2.png')",
+        }}
+      />
+
       {/* Morphing background blobs */}
       <motion.div
         className="absolute w-[400px] h-[400px] top-[-150px] left-[-150px] bg-gradient-to-tr from-purple-900/60 to-purple-700/40 rounded-full filter blur-[140px]"
