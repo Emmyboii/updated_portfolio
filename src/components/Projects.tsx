@@ -1,59 +1,69 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
+import philomena from '../assets/philomena.png'
+import philomenaLive from '../assets/philomenaLive.png'
+import Abprint from '../assets/Abprint.png'
+import NIFTIUM from '../assets/NIFTIUM.png'
+import Ecommerce from '../assets/ecommerce.jpg'
+import Reccur from '../assets/Reccur.png'
+import americanmilestoneelectric from '../assets/americanmilestoneelectric.png'
+import Richsterling from '../assets/Richsterling.png'
+import TMBIS from '../assets/TMBIS.png'
+
 
 const projects = [
   {
     title: "Philomena",
     desc: "Philomena is a beautiful and intuitive wedding website platform that allows couples to create personalized websites for their special day. Couples can share event details, RSVP forms, photo galleries, and memorable moments with family and friends, all in a stylish and responsive design.",
-    img: "/src/assets/philomena.png",
+    img: philomena,
     link: "https://philomena.events/",
   },
   {
     title: "Philomena Live Page Website",
     desc: "The Philomena Live Page Website is a central hub showcasing all active couple wedding websites. Visitors can explore wedding details, RSVP pages, photo galleries, and see real examples of beautifully crafted wedding websites in action.",
-    img: "/src/assets/philomenaLive.png",
+    img: philomenaLive,
     link: "https://frances-stanley.philomena.events/",
   },
   {
     title: "Abprint Printing and Branding",
     desc: "A modern, professional website for Abprint, a printing brand. Showcases products, printing services, and contact information with a responsive design, clean layout, and visually appealing graphics to attract clients.",
-    img: "/src/assets/Abprint.png",
+    img: Abprint,
     link: "https://abprint.vercel.app",
   },
   {
     title: "Niftium Electric & Renovation",
     desc: "Modern website for an electrical and handyman service company. Built with React and Tailwind, includes interactive sections, booking CTAs, and responsive design.",
-    img: "/src/assets/NIFTIUM.png",
+    img: NIFTIUM,
     link: "https://niftium.vercel.app/",
   },
   {
     title: "EmmyBuy",
     desc: "Full-stack e-commerce platform built with ReactJS and ExpressJS. Responsive UI, authentication, product categories, and cart functionality for seamless browsing.",
-    img: "/src/assets/ecommerce.JPG",
+    img: Ecommerce,
     link: "https://emmybuy.vercel.app",
   },
   {
     title: "Reccur",
     desc: "Global money transfer platform allowing users to send, receive, convert, and manage funds worldwide, supporting crypto payments and freelance income.",
-    img: "/src/assets/Reccur.png",
+    img: Reccur,
     link: "https://www.tryreccur.com/",
   },
   {
     title: "American Milestone Electric LLC",
     desc: "Website for a home services company providing expert repairs, installations, and maintenance. Interactive service sections, contact page, and booking CTAs.",
-    img: "/src/assets/americanmilestoneelectric.png",
+    img: americanmilestoneelectric,
     link: "https://americanmilestoneelectric.com/",
   },
   {
     title: "Rich Sterling Hires",
     desc: "Platform connecting clients with skilled professionals. Efficient search, booking, and communication between clients and experts for a seamless hiring experience.",
-    img: "/src/assets/Richsterling.png",
+    img: Richsterling,
     link: "https://www.richsterlinghires.com/",
   },
   {
     title: "TMBIS Switzerland",
     desc: "Professional development website featuring responsive design, course listings, program details, and interactive cart functionality for optimized user experience.",
-    img: "/src/assets/TMBIS.png",
+    img: TMBIS,
     link: "https://tmbi-black.vercel.app/",
   },
   // {
