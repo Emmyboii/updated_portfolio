@@ -8,7 +8,7 @@ import Ecommerce from '../assets/ecommerce.jpg'
 import Reccur from '../assets/Reccur.png'
 import americanmilestoneelectric from '../assets/americanmilestoneelectric.png'
 import Richsterling from '../assets/Richsterling.png'
-import TMBIS from '../assets/TMBIS.png'
+import TMBIS from '../assets/tmbis.png'
 
 
 const projects = [
