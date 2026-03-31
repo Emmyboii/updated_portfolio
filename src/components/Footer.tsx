@@ -1,5 +1,6 @@
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
+import logo from '../assets/logo2.png'
 
 interface footerColumnProps {
   title: string;
@@ -67,7 +68,7 @@ const Footer = () => {
             {/* Logo */}
             <a href="/" className="flex items-center gap-2">
               <img
-                src="/src/assets/logo2.png"
+                src={logo}
                 alt="logo"
                 className="sm:w-48 w-36 object-contain"
               />

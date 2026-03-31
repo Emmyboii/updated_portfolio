@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import logo from '../assets/logo2.png'
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,7 @@ function Navbar() {
         {/* Logo */}
         <a href="/" className="flex items-center gap-2">
           <img
-            src="/src/assets/logo2.png"
+            src={logo}
             alt="logo"
             className="sm:w-48 w-36 object-contain"
           />
