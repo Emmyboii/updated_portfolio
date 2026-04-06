@@ -58,10 +58,10 @@ function About() {
         >
           <h2 className="text-2xl font-semibold mb-6 text-purple-300">Personal Info</h2>
           <div className="flex flex-col gap-4">
-            <InfoRow label="Full Name" value="Olukoya Emmanuel Ayomide" />
+            <InfoRow label="Full Name" value="Olukoya Emmanuel" />
             <InfoRow label="Phone" value="09036826456" />
             <InfoRow label="Email" value="olukoyae01@gmail.com" />
-            <InfoRow label="Address" value="2, Agboroko, LASU OJO road, Lagos, Nigeria" />
+            {/* <InfoRow label="Address" value="2, Agboroko, LASU OJO road, Lagos, Nigeria" /> */}
           </div>
         </motion.div>
 
