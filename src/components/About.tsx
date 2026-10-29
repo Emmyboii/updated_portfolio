@@ -1,141 +1,134 @@
-import { motion } from "framer-motion";
-import { useState, type JSX } from "react";
-import { SiHtml5, SiCss, SiJavascript, SiReact, SiExpress, SiTailwindcss, SiTypescript } from "react-icons/si";
+import portrait from "../assets/pics1.jpg";
+import { Reveal, SectionLabel } from "./ui";
 
-const skills = [
-  { name: "HTML5", level: 95, icon: <SiHtml5 /> },
-  { name: "CSS3", level: 85, icon: <SiCss /> },
-  { name: "JavaScript", level: 60, icon: <SiJavascript /> },
-  { name: "ReactJS", level: 90, icon: <SiReact /> },
-  { name: "TypeScript", level: 67, icon: <SiTypescript /> },
-  { name: "ExpressJS", level: 57, icon: <SiExpress /> },
-  { name: "TailwindCSS", level: 94, icon: <SiTailwindcss /> },
+const facts = [
+  { label: "Based in", value: "Lagos, Nigeria" },
+  { label: "Email", value: "olukoyae01@gmail.com", href: "mailto:olukoyae01@gmail.com" },
+  { label: "Phone", value: "+234 903 682 6456", href: "tel:+2349036826456" },
+  { label: "Availability", value: "Freelance & full-time" },
+];
+
+const toolkit = [
+  {
+    label: "Frontend",
+    items: ["React", "TypeScript", "JavaScript", "Tailwind CSS", "HTML", "CSS"],
+  },
+  { label: "Backend", items: ["Node.js", "Express"] },
+  { label: "Mobile", items: ["React Native"] },
+  { label: "Practice", items: ["UI/UX", "Responsive design", "API design"] },
 ];
 
 function About() {
-
-  // Generate particle positions once on mount
-  const [particlePositions] = useState(() =>
-    Array.from({ length: 10 }).map(() => ({
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-    }))
-  );
-
   return (
-    <section
-      id="about"
-      className="relative min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#110a1f] to-[#0a0a0a] flex flex-col items-center justify-center px-6 py-24 overflow-hidden"
-    >
-      {/* Floating particles */}
-      {particlePositions.map((position, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 bg-purple-500 rounded-full opacity-50"
-          style={{ top: `${position.top}%`, left: `${position.left}%` }}
-          animate={{ y: [0, -20, 0], x: [0, 15, 0] }}
-          transition={{
-            duration: 6 + i,
-            repeat: Infinity,
-            repeatType: "mirror",
-            delay: i * 0.3,
-          }}
-        />
-      ))}
-
-      <h1 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-purple-700 mb-16">
-        ABOUT ME
-      </h1>
-
-      <div className="flex flex-col lg:flex-row w-full max-w-7xl gap-12">
-        {/* Left: Personal Info Card */}
-        <motion.div
-          className="flex-1 bg-purple-900/20 backdrop-blur-lg rounded-xl sm:p-8 p-4 shadow-lg border border-purple-700/40"
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-2xl font-semibold mb-6 text-purple-300">Personal Info</h2>
-          <div className="flex flex-col gap-4">
-            <InfoRow label="Full Name" value="Olukoya Emmanuel" />
-            <InfoRow label="Phone" value="09036826456" />
-            <InfoRow label="Email" value="olukoyae01@gmail.com" />
-            {/* <InfoRow label="Address" value="2, Agboroko, LASU OJO road, Lagos, Nigeria" /> */}
+    <section id="about" aria-labelledby="about-heading" className="relative py-24 sm:py-32">
+      <div className="container-page grid gap-14 lg:grid-cols-12 lg:gap-16">
+        <Reveal className="lg:col-span-5">
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="absolute -inset-3 hidden rounded-3xl border border-acid/20 sm:block"
+            />
+            <div className="relative overflow-hidden rounded-2xl border border-line bg-surface">
+              <img
+                src={portrait}
+                alt="Olukoya Emmanuel working on a laptop"
+                width={1016}
+                height={762}
+                loading="lazy"
+                decoding="async"
+                className="aspect-[4/5] w-full object-cover object-[65%_35%] brightness-90 contrast-125 grayscale"
+              />
+              <div aria-hidden="true" className="absolute inset-0 bg-acid/20 mix-blend-color" />
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent"
+              />
+              <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 rounded-full border border-white/15 bg-ink/70 px-4 py-2 backdrop-blur">
+                <span className="eyebrow whitespace-nowrap text-bone/80">
+                  Emmanuel — Lagos, NG
+                </span>
+                <span className="hidden items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.16em] text-acid sm:flex">
+                  <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-acid" />
+                  Open to work
+                </span>
+              </div>
+            </div>
+            <p className="eyebrow mt-4">Fig. 01 — The engineer, in his natural habitat</p>
           </div>
-        </motion.div>
+        </Reveal>
 
-        {/* Right: Bio & Skills */}
-        <motion.div
-          className="flex-1 flex flex-col gap-8"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Bio */}
-          <div className="bg-purple-900/20 backdrop-blur-lg rounded-xl sm:p-8 p-4 shadow-lg border border-purple-700/40">
-            <p className="text-gray-300 leading-relaxed sm:text-lg">
-              Hello! I'm Emmanuel, a passionate Web Developer and Full Stack Engineer committed to crafting elegant, high-performance digital experiences that seamlessly blend form and function.
+        <div className="lg:col-span-7">
+          <SectionLabel number="01" title="About" />
+          <h2
+            id="about-heading"
+            className="mt-6 font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl"
+          >
+            Engineering with a <span className="italic text-acid">designer’s eye.</span>
+          </h2>
+
+          <div className="mt-8 max-w-2xl space-y-5 leading-relaxed text-muted sm:text-lg">
+            <p>
+              I’m Emmanuel, a software engineer and full-stack developer based in Lagos. For the
+              past 3 years, I’ve been building web and mobile products that pair solid engineering
+              with a sharp eye for design.
             </p>
-            <p className="text-gray-300 leading-relaxed sm:text-lg mt-4">
-              With over 3 years of hands-on experience, I specialize in building responsive, intuitive, and visually striking websites and applications. My work lies at the intersection of design and technology, ensuring every project is both impactful and user-friendly.
+            <p>
+              My work lives where design meets technology. On the front end, I build polished,
+              accessible interfaces with React and Tailwind CSS. On the back end, I design APIs and
+              server-side systems with Node.js and Express that stay reliable as products grow.
             </p>
-            <p className="text-gray-300 leading-relaxed sm:text-lg mt-4">
-              From developing polished user interfaces with ReactJS to architecting scalable backend systems using NodeJS and ExpressJS, I manage end-to-end web development with precision, innovation, and attention to detail.
-            </p>
-            <p className="text-gray-300 leading-relaxed sm:text-lg mt-4">
-              Outside of coding, I enjoy gaming to recharge my creativity and practice mindfulness through meditation and reflection. I'm always eager to collaborate on exciting projects that push boundaries and bring innovative ideas to life.
+            <p>
+              I care about the details — the loading state, the empty state, the way a page feels on
+              a slow connection. Good software should be fast, clear, and a little bit delightful.
+              When I’m away from the keyboard, you’ll find me gaming or practicing meditation,
+              resetting before the next build.
             </p>
           </div>
 
-          {/* Skills */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-            {skills.map((skill, i) => (
-              <SkillBar key={i} name={skill.name} level={skill.level} icon={skill.icon} />
+          <dl className="mt-10 border-t border-line">
+            {facts.map((fact) => (
+              <div
+                key={fact.label}
+                className="flex flex-col gap-1 border-b border-line py-3 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+              >
+                <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                  {fact.label}
+                </dt>
+                <dd className="text-sm text-bone/80 sm:text-right">
+                  {fact.href ? (
+                    <a
+                      href={fact.href}
+                      className="break-all transition-colors duration-300 hover:text-acid"
+                    >
+                      {fact.value}
+                    </a>
+                  ) : (
+                    fact.value
+                  )}
+                </dd>
+              </div>
             ))}
+          </dl>
+
+          <div className="mt-10">
+            <p className="eyebrow">Toolkit</p>
+            <dl className="mt-4 border-t border-line">
+              {toolkit.map((group) => (
+                <div
+                  key={group.label}
+                  className="grid gap-1.5 border-b border-line py-3 sm:grid-cols-[110px_1fr] sm:gap-6"
+                >
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+                    {group.label}
+                  </dt>
+                  <dd className="text-sm text-bone/80">{group.items.join(" · ")}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
-  );
-}
-
-// Component for personal info row
-function InfoRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex justify-between text-gray-300 hover:text-purple-400 transition">
-      <span className="font-medium sm:text-base text-sm">{label}:</span>
-      <span className="font-semibold sm:text-base text-sm text-right">{value}</span>
-    </div>
-  );
-}
-
-// Component for skill bar
-function SkillBar({ name, level, icon }: { name: string; level: number; icon: JSX.Element }) {
-  return (
-    <motion.div
-      className="bg-purple-900/20 backdrop-blur-lg rounded-xl p-4 flex flex-col gap-2 shadow-lg border border-purple-700/40"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8 }}
-    >
-      <div className="flex items-center gap-2 text-purple-300 font-semibold sm:text-lg">
-        {icon}
-        {name}
-        <span className="ml-auto text-gray-300">{level}%</span>
-      </div>
-      <div className="w-full h-2 bg-purple-700/40 rounded-full overflow-hidden">
-        <motion.div
-          className="h-2 bg-purple-400 rounded-full"
-          initial={{ width: 0 }}
-          whileInView={{ width: `${level}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-        />
-      </div>
-    </motion.div>
   );
 }
 

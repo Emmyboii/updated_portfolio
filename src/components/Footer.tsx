@@ -1,195 +1,141 @@
-import { motion, useMotionValue, useTransform } from "framer-motion";
-import { useState } from "react";
-import logo from '../assets/logo2.png'
+import { ArrowUpRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Brand } from "./Brand";
 
-interface footerColumnProps {
-  title: string;
-  links: string[];
-  linkTo: string[];
-  newTab?: boolean;
-}
+const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false,
+  timeZone: "Africa/Lagos",
+});
 
-const Footer = () => {
-  const year = new Date().getFullYear();
+const hourFormatter = new Intl.DateTimeFormat("en-GB", {
+  hour: "numeric",
+  hour12: false,
+  timeZone: "Africa/Lagos",
+});
 
-  // Smart greeting based on time
-
-  const [greeting] = useState(() => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Good morning ☀️";
-    if (hour < 18) return "Good afternoon 🌤️";
-    return "Good evening 🌙";
-  });
-
-  // Cursor glow effect
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    mouseX.set(e.clientX);
-    mouseY.set(e.clientY);
-  };
-
-  const glowX = useTransform(mouseX, (x) => x - 150);
-  const glowY = useTransform(mouseY, (y) => y - 150);
-
-  return (
-    <footer
-      onMouseMove={handleMouseMove}
-      className="relative bg-[#0a0a0a] text-white overflow-hidden"
-    >
-      {/* Cursor Glow */}
-      <motion.div
-        className="pointer-events-none fixed w-[300px] h-[300px] rounded-full bg-purple-600/20 blur-3xl"
-        style={{ x: glowX, y: glowY }}
-      />
-
-      {/* SVG WAVE */}
-      <div className="absolute top-0 left-0 w-full overflow-hidden leading-none rotate-180">
-        <svg
-          className="relative block w-full h-[80px]"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-          viewBox="0 0 1200 120"
-        >
-          <path
-            d="M0,0V46.29c47.79,22,103.59,29,158,17,70-15,136-58,206-73,73-16,140,4,209,35,69,30,138,60,209,58,75-3,146-39,218-63,66-22,130-28,200-15V0Z"
-            fill="#0a0a0a"
-          />
-        </svg>
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 py-20">
-
-        {/* TOP */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10 mb-16">
-
-          <div>
-            {/* Logo */}
-            <a href="/" className="flex items-center gap-2">
-              <img
-                src={logo}
-                alt="logo"
-                className="sm:w-48 w-36 object-contain"
-              />
-            </a>
-
-            <p className="text-gray-400 mt-3">{greeting}</p>
-
-            <div className="flex items-center gap-2 mt-3">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-              <p className="text-sm text-gray-400">
-                Available for freelance & full-time
-              </p>
-            </div>
-          </div>
-
-          {/* MAGNETIC BUTTON */}
-          <MagneticButton />
-        </div>
-
-        {/* LINKS */}
-        <div className="grid md:grid-cols-3 gap-12 mb-16">
-
-          <FooterColumn
-            title="Navigation"
-            links={["Home", "About", "Projects", "Contact"]}
-            linkTo={["#", "#about", "#projects", "#contact"]}
-          />
-
-          <FooterColumn
-            title="Socials"
-            newTab={true}
-            links={["GitHub", "LinkedIn", "Twitter"]}
-            linkTo={["https://github.com/Emmyboii", "https://www.linkedin.com/in/emmanuel-olukoya-2b7b00268", "https://x.com/Emmyboi000"]}
-          />
-
-          <div>
-            <h3 className="sm:text-lg font-semibold text-purple-400 mb-4">
-              Contact
-            </h3>
-            <p className="text-gray-400 text-sm">
-              olukoyae01@gmail.com
-            </p>
-            <p className="text-gray-400 text-sm mt-2">
-              +234 903 682 6456
-            </p>
-          </div>
-        </div>
-
-        {/* DIVIDER */}
-        <div className="h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent mb-6"></div>
-
-        {/* BOTTOM */}
-        <div className="flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm gap-4">
-          <p>© {year} Emmanuel Olukoya</p>
-
-          <motion.p whileHover={{ scale: 1.05 }}>
-            Built with React ✦ Tailwind ✦ Framer Motion
-          </motion.p>
-        </div>
-      </div>
-    </footer>
-  );
+type FooterLink = {
+  label: string;
+  href: string;
+  external?: boolean;
 };
 
-/* ---------------- COMPONENTS ---------------- */
+const navigateLinks: FooterLink[] = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Process", href: "#process" },
+  { label: "Work", href: "#work" },
+  { label: "Contact", href: "#contact" },
+];
 
-const FooterColumn = ({ title, links, linkTo, newTab }: footerColumnProps) => {
+const elsewhereLinks: FooterLink[] = [
+  { label: "GitHub", href: "https://github.com/Emmyboii", external: true },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/emmanuel-olukoya-2b7b00268",
+    external: true,
+  },
+  { label: "X (Twitter)", href: "https://x.com/Emmyboi000", external: true },
+  {
+    label: "Facebook",
+    href: "https://web.facebook.com/profile.php?id=100074979452476",
+    external: true,
+  },
+];
+
+const reachLinks: FooterLink[] = [
+  { label: "olukoyae01@gmail.com", href: "mailto:olukoyae01@gmail.com" },
+  { label: "+234 903 682 6456", href: "tel:+2349036826456" },
+  { label: "WhatsApp", href: "https://wa.me/2349036826456", external: true },
+];
+
+function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div>
-      <h3 className="sm:text-lg font-semibold text-purple-400 mb-4">
-        {title}
-      </h3>
-      <ul className="space-y-3 text-gray-400 text-sm">
-        {links.map((link, i) => (
-          <li key={i}>
-            <motion.a
-              href={linkTo[i]}
-              target={newTab ? "_blank" : undefined}
-              rel={newTab ? "noopener noreferrer" : undefined}
-              whileHover={{ x: 6 }}
-              className="hover:text-white transition"
+      <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">{title}</h2>
+      <ul className="mt-4 space-y-2.5">
+        {links.map((link) => (
+          <li key={link.label}>
+            <a
+              href={link.href}
+              {...(link.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="group inline-flex items-center gap-1.5 break-words text-sm text-bone/70 transition-colors duration-300 hover:text-acid"
             >
-              {link}
-            </motion.a>
+              {link.label}
+              {link.external && (
+                <ArrowUpRight
+                  aria-hidden="true"
+                  size={12}
+                  className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+              )}
+            </a>
           </li>
         ))}
       </ul>
     </div>
   );
-};
+}
 
-/* Magnetic CTA Button */
-const MagneticButton = () => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+function Footer() {
+  const [now, setNow] = useState(() => new Date());
 
-  const handleMouse = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+  useEffect(() => {
+    const interval = window.setInterval(() => setNow(new Date()), 30000);
+    return () => window.clearInterval(interval);
+  }, []);
 
-    x.set((e.clientX - centerX) * 0.2);
-    y.set((e.clientY - centerY) * 0.2);
-  };
-
-  const reset = () => {
-    x.set(0);
-    y.set(0);
-  };
+  const year = new Date().getFullYear();
+  const time = timeFormatter.format(now);
+  const hour = Number(hourFormatter.format(now));
+  const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
   return (
-    <motion.a
-      href="#contact"
-      onMouseMove={handleMouse}
-      onMouseLeave={reset}
-      style={{ x, y }}
-      className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-purple-800 text-white font-semibold shadow-lg hover:shadow-purple-700/50 transition-all duration-300"
-    >
-      Let’s Talk 🚀
-    </motion.a>
+    <footer className="relative overflow-hidden border-t border-line bg-ink">
+      <div className="container-page pt-16 sm:pt-20">
+        <div className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <Brand />
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
+              Software engineer building thoughtful web and mobile products from Lagos, Nigeria.
+            </p>
+            <p className="mt-6 flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+              <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-acid" />
+              {greeting} in Lagos — <span className="tabular-nums">{time}</span>
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
+            <FooterColumn title="Navigate" links={navigateLinks} />
+            <FooterColumn title="Elsewhere" links={elsewhereLinks} />
+            <FooterColumn title="Reach" links={reachLinks} />
+          </div>
+        </div>
+
+        <div className="mt-14 flex flex-col gap-4 border-t border-line py-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>© {year} Olukoya Emmanuel. All rights reserved.</p>
+          <p className="sm:text-center">Built with React, Tailwind CSS & Framer Motion.</p>
+          <a
+            href="#home"
+            className="inline-flex items-center gap-2 transition-colors duration-300 hover:text-acid"
+          >
+            Back to top
+            <ArrowUpRight aria-hidden="true" size={14} className="-rotate-45" />
+          </a>
+        </div>
+
+        <p
+          aria-hidden="true"
+          translate="no"
+          className="select-none overflow-hidden whitespace-nowrap pb-6 font-display text-[clamp(4.5rem,15vw,12rem)] leading-[0.72] tracking-[-0.04em] text-bone/[0.07]"
+        >
+          emmycode<span className="text-acid/30">.</span>
+        </p>
+      </div>
+    </footer>
   );
-};
+}
 
 export default Footer;

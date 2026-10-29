@@ -1,219 +1,274 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useEffect, useState } from "react";
-import philomena from '../assets/philomena.png'
-import philomenaLive from '../assets/philomenaLive.png'
-import Abprint from '../assets/Abprint.png'
-import NIFTIUM from '../assets/NIFTIUM.png'
-import Ecommerce from '../assets/ecommerce.png'
-import Reccur from '../assets/Reccur.png'
-import americanmilestoneelectric from '../assets/americanmilestoneelectric.png'
-import Richsterling from '../assets/Richsterling.png'
-import TMBIS from '../assets/tmbis.png'
+import { ArrowUpRight } from "lucide-react";
+import philomena from "../assets/work/philomena.jpg";
+import philomenaLive from "../assets/work/philomena-live.jpg";
+import abprint from "../assets/work/abprint.jpg";
+import niftium from "../assets/work/niftium.jpg";
+import emmybuy from "../assets/work/emmybuy.jpg";
+import reccur from "../assets/work/reccur.jpg";
+import americanMilestone from "../assets/work/american-milestone.jpg";
+import richSterling from "../assets/work/rich-sterling.jpg";
+import tmbis from "../assets/work/tmbis.jpg";
+import { SectionLabel } from "./ui";
 
+type Project = {
+  title: string;
+  description: string;
+  category: string;
+  img: string;
+  width: number;
+  height: number;
+  link: string;
+};
 
-const projects = [
+const projects: Project[] = [
   {
     title: "Philomena",
-    desc: "Philomena is a beautiful and intuitive wedding website platform that allows couples to create personalized websites for their special day. Couples can share event details, RSVP forms, photo galleries, and memorable moments with family and friends, all in a stylish and responsive design.",
+    description:
+      "A wedding-website platform that lets couples create personalised sites with RSVPs, photo galleries, and every event detail — all in a responsive, elegant package.",
+    category: "Wedding platform · Web app",
     img: philomena,
+    width: 1600,
+    height: 814,
     link: "https://philomena.events/",
   },
   {
-    title: "Philomena Live Page Website",
-    desc: "The Philomena Live Page Website is a central hub showcasing all active couple wedding websites. Visitors can explore wedding details, RSVP pages, photo galleries, and see real examples of beautifully crafted wedding websites in action.",
+    title: "Philomena Live",
+    description:
+      "A showcase hub for live Philomena wedding sites, letting visitors explore real couples’ pages.",
+    category: "Showcase · Events",
     img: philomenaLive,
+    width: 1600,
+    height: 813,
     link: "https://frances-stanley.philomena.events/",
   },
   {
-    title: "Abprint Printing and Branding",
-    desc: "A modern, professional website for Abprint, a printing brand. Showcases products, printing services, and contact information with a responsive design, clean layout, and visually appealing graphics to attract clients.",
-    img: Abprint,
+    title: "Abprint",
+    description:
+      "A modern site for a printing and branding studio, built to turn visitors into clients.",
+    category: "Branding · Marketing site",
+    img: abprint,
+    width: 1600,
+    height: 818,
     link: "https://abprint.vercel.app",
   },
   {
     title: "Niftium Electric & Renovation",
-    desc: "Modern website for an electrical and handyman service company. Built with React and Tailwind, includes interactive sections, booking CTAs, and responsive design.",
-    img: NIFTIUM,
+    description:
+      "A booking-focused site for an electrical and renovation company, with interactive service sections.",
+    category: "Services · Web",
+    img: niftium,
+    width: 1600,
+    height: 815,
     link: "https://niftium.vercel.app/",
   },
   {
     title: "EmmyBuy",
-    desc: "Full-stack e-commerce platform built with ReactJS and ExpressJS. Responsive UI, authentication, product categories, and cart functionality for seamless browsing.",
-    img: Ecommerce,
+    description:
+      "A full-stack e-commerce platform with authentication, categories, and a working cart — React in front, Express behind.",
+    category: "E-commerce · Full-stack",
+    img: emmybuy,
+    width: 725,
+    height: 344,
     link: "https://emmybuy.vercel.app",
   },
   {
     title: "Reccur",
-    desc: "Global money transfer platform allowing users to send, receive, convert, and manage funds worldwide, supporting crypto payments and freelance income.",
-    img: Reccur,
+    description:
+      "A global money-transfer platform for sending, receiving, converting, and managing funds across borders.",
+    category: "Fintech · Product",
+    img: reccur,
+    width: 1600,
+    height: 794,
     link: "https://www.tryreccur.com/",
   },
   {
-    title: "American Milestone Electric LLC",
-    desc: "Website for a home services company providing expert repairs, installations, and maintenance. Interactive service sections, contact page, and booking CTAs.",
-    img: americanmilestoneelectric,
+    title: "American Milestone Electric",
+    description:
+      "A home-services website with clear service showcases and booking calls to action.",
+    category: "Home services · Web",
+    img: americanMilestone,
+    width: 1600,
+    height: 822,
     link: "https://americanmilestoneelectric.com/",
   },
   {
     title: "Rich Sterling Hires",
-    desc: "Platform connecting clients with skilled professionals. Efficient search, booking, and communication between clients and experts for a seamless hiring experience.",
-    img: Richsterling,
+    description:
+      "A hiring platform connecting clients with vetted professionals through search and booking.",
+    category: "Marketplace · Web",
+    img: richSterling,
+    width: 1600,
+    height: 801,
     link: "https://www.richsterlinghires.com/",
   },
   {
     title: "TMBIS Switzerland",
-    desc: "Professional development website featuring responsive design, course listings, program details, and interactive cart functionality for optimized user experience.",
-    img: TMBIS,
+    description:
+      "A professional development site with course listings, program details, and a working cart.",
+    category: "Education · Web",
+    img: tmbis,
+    width: 1600,
+    height: 820,
     link: "https://tmbi-black.vercel.app/",
   },
-  // {
-  //   title: "LASU IDC",
-  //   desc: "Replica of Lagos State University portal, enabling student registration, result viewing, and course management. Fully responsive and mimics the original functionality.",
-  //   img: "/src/assets/lidc.JPG",
-  //   link: "https://lidc-clone.vercel.app/",
-  // },
 ];
 
-const Projects = () => {
+const tileSpans = [
+  "lg:col-span-2",
+  "",
+  "",
+  "lg:col-span-2",
+  "",
+  "",
+  "",
+  "",
+];
 
-  const { scrollY } = useScroll();
-
-  // Parallax: cards float and shift slightly on scroll
-  // const yOffset = useTransform(scrollY, [0, 1000], [0, 0]);
-  // const rotateX = useTransform(scrollY, [0, 1000], [0, 15]);
-  // const rotateY = useTransform(scrollY, [0, 1000], [0, -15]);
-
-  // yOffset is always 0
-  const yOffset = useTransform(scrollY, [0, 1000], [0, 0]);
-  const rotateX = useTransform(scrollY, [0, 1000], [0, 15]);
-
-  // Create rotateY for each card based on index (-15, 15, -15, 15 ...)
-  // const rotateYArray = projects.map((_, index) => {
-  //   return useTransform(scrollY, [0, 1000], [0, index % 2 === 0 ? -15 : 15]);
-  // });
-
-  // Z-axis stagger and scroll-based scale
-  const scaleArray = projects.map((_, index) =>
-    useTransform(scrollY, [0, 1000], [1 - index * 0.03, 1 + index * 0.03])
-  );
-  const rotateYArray = projects.map((_, index) =>
-    useTransform(scrollY, [0, 1000], [0, index % 2 === 0 ? -15 : 15])
-  );
-  const zIndexArray = projects.map((_, index) =>
-    index % 2 === 0 ? projects.length - index : index
-  );
-
-  // Generate particle positions once on mount
-  const [particlePositions] = useState(() =>
-    Array.from({ length: 10 }).map(() => ({
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-    }))
-  );
-
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkScreen = () => setIsMobile(window.innerWidth < 1280);
-    checkScreen();
-    window.addEventListener("resize", checkScreen);
-    return () => window.removeEventListener("resize", checkScreen);
-  }, []);
-
+function FeaturedProject({ project }: { project: Project }) {
   return (
-    <section
-      id="projects"
-      className="relative py-28 bg-gradient-to-b from-[#0a0a0a] via-[#120a20] to-[#0a0a0a] text-white overflow-hidden"
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group mt-12 grid overflow-hidden rounded-3xl border border-line bg-surface transition-colors duration-300 hover:border-acid/40 lg:grid-cols-12"
     >
-      {/* Floating background particles */}
-      {particlePositions.map((position, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 rounded-full bg-purple-500 opacity-40"
-          animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
-          transition={{
-            duration: 10 + i,
-            repeat: Infinity,
-            repeatType: "mirror",
-            delay: i * 0.2,
-          }}
-          style={{ top: `${position.top}%`, left: `${position.left}%` }}
+      <div className="relative min-h-[260px] overflow-hidden lg:col-span-7 lg:min-h-[420px]">
+        <img
+          src={project.img}
+          alt={`${project.title} website preview`}
+          width={project.width}
+          height={project.height}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-left transition-transform duration-700 group-hover:scale-[1.03]"
         />
-      ))}
+      </div>
 
-      <h1 className="text-4xl md:text-6xl font-extrabold text-center sm:mb-16 mb-7 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-purple-700">
-        PROJECTS <span className="text-purple-300">DONE</span>
-      </h1>
+      <div className="flex flex-col justify-between gap-8 p-7 sm:p-9 lg:col-span-5 lg:p-10">
+        <div>
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="rounded-full bg-acid px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-ink">
+              Featured
+            </span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-acid/80">
+              {project.category}
+            </span>
+          </div>
+          <h3 className="mt-4 font-display text-4xl leading-none sm:text-5xl">{project.title}</h3>
+          <p className="mt-4 leading-relaxed text-muted">{project.description}</p>
+        </div>
 
-      <div className="relative 2xl:max-w-7xl xl:max-w-6xl mx-auto px-6 flex flex-col xl:gap-32 gap-10 pt-5">
-        {projects.map((project, index) => {
-          const isEven = index % 2 === 0;
+        <div className="flex items-center justify-between border-t border-line pt-5">
+          <span className="text-sm text-bone/80">View live site</span>
+          <span
+            aria-hidden="true"
+            className="grid h-11 w-11 place-items-center rounded-full border border-line text-bone transition-colors duration-300 group-hover:border-acid group-hover:bg-acid group-hover:text-ink"
+          >
+            <ArrowUpRight size={18} />
+          </span>
+        </div>
+      </div>
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
+  );
+}
 
-          return (
-            <motion.div
-              key={index}
-              className={`relative flex flex-col lg:flex-row items-center gap-10 perspective-1000 ${!isEven ? "lg:flex-row-reverse" : ""
-                }`}
-              style={{
-                y: isMobile ? 0 : yOffset,
-                rotateX: isMobile ? 0 : rotateX,
-                rotateY: isMobile ? 0 : rotateYArray[index],
-                scale: isMobile ? 1 : scaleArray[index],
-                zIndex: isMobile ? "auto" : zIndexArray[index],
-              }}
+function ProjectCard({ project, className = "" }: { project: Project; className?: string }) {
+  return (
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface transition-colors duration-300 hover:border-acid/40 ${className}`}
+    >
+      <div className="relative h-52 overflow-hidden sm:h-60">
+        <img
+          src={project.img}
+          alt={`${project.title} website preview`}
+          width={project.width}
+          height={project.height}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+        />
+        <span
+          aria-hidden="true"
+          className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-ink/70 text-bone backdrop-blur transition-colors duration-300 group-hover:bg-acid group-hover:text-ink"
+        >
+          <ArrowUpRight size={16} />
+        </span>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-acid/80">
+          {project.category}
+        </p>
+        <h3 className="mt-2 font-display text-2xl text-bone transition-colors duration-300 group-hover:text-acid sm:text-[1.7rem]">
+          {project.title}
+        </h3>
+        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-muted">
+          {project.description}
+        </p>
+        <span className="mt-auto pt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-muted transition-colors duration-300 group-hover:text-bone">
+          Visit site
+        </span>
+      </div>
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
+  );
+}
+
+function WorkCta() {
+  return (
+    <div className="flex h-full flex-col justify-between gap-8 rounded-2xl bg-acid p-6 text-ink sm:col-span-2 sm:p-8 lg:col-span-2">
+      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink/60">Next project</p>
+      <div>
+        <h3 className="font-display text-3xl leading-tight sm:text-4xl">
+          Have something ambitious in mind?
+        </h3>
+        <a
+          href="#contact"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-bone transition-colors duration-300 hover:bg-ink/85"
+        >
+          Let’s talk
+          <ArrowUpRight aria-hidden="true" size={16} />
+        </a>
+      </div>
+    </div>
+  );
+}
+
+function Projects() {
+  return (
+    <section id="work" aria-labelledby="work-heading" className="border-t border-line py-24 sm:py-32">
+      <div className="container-page">
+        <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <SectionLabel number="04" title="Selected work" />
+            <h2
+              id="work-heading"
+              className="mt-6 font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl"
             >
-              {/* Project Image */}
-              <motion.img
-                src={project.img}
-                alt={project.title}
-                className="lg:w-1/2 w-full rounded-3xl shadow-2xl border border-purple-700/50 backdrop-blur-lg cursor-pointer hover:scale-105 hover:rotate-3 transition-transform duration-500"
-                whileHover={{
-                  scale: 1.08,
-                  rotateY: isEven ? 8 : -8,
-                  translateY: -5,
-                  rotateX: 2
-                }}
-              />
+              Selected <span className="italic text-acid">work.</span>
+            </h2>
+          </div>
+          <p className="max-w-sm text-sm leading-relaxed text-muted sm:text-right">
+            9 live builds across weddings, fintech, e-commerce, and services — each one designed and
+            shipped end to end.
+          </p>
+        </div>
 
-              {/* Project Details Card */}
-              <motion.div
-                className="lg:w-1/2 bg-purple-900/20 backdrop-blur-lg pb-8 rounded-3xl sm:p-8 p-4 border border-purple-700/40 shadow-lg text-center lg:text-left hover:translate-y-[-5px] transition-transform duration-300"
-                whileHover={{ y: -5 }}
-              >
-                <h2 className="text-3xl font-bold text-purple-400 mb-4">{project.title}</h2>
-                <p className="text-gray-300 leading-relaxed mb-6">{project.desc}</p>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 rounded-xl text-white font-semibold shadow-lg hover:shadow-purple-700/50 transition-all duration-300"
-                >
-                  View Project
-                </a>
-              </motion.div>
-            </motion.div>
-          );
-        })}
+        <FeaturedProject project={projects[0]} />
+
+        <div className="mt-4 grid grid-cols-1 gap-4 sm:mt-5 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+          {projects.slice(1).map((project, index) => (
+            <ProjectCard key={project.title} project={project} className={tileSpans[index]} />
+          ))}
+          <WorkCta />
+        </div>
       </div>
-
-      <div className="absolute inset-0 pointer-events-none">
-        {particlePositions.map((position, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-[1px] h-[60px] bg-purple-400/20"
-            animate={{ y: [0, 40, 0], opacity: [0.2, 0.6, 0.2] }}
-            transition={{ duration: 10 + i, repeat: Infinity, delay: i * 0.1 }}
-            style={{ top: `${position.top}%`, left: `${position.left}%` }}
-          />
-        ))}
-      </div>
-
-
-      {/* Floating abstract shapes */}
-      <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] rounded-full bg-purple-600/20 blur-3xl animate-blob"></div>
-      <div className="absolute bottom-[-150px] right-[-120px] w-[400px] h-[400px] rounded-full bg-purple-700/30 blur-3xl animate-blob animation-delay-2000"></div>
     </section>
   );
-};
+}
 
 export default Projects;

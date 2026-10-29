@@ -1,93 +1,154 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight, Minus, Plus } from "lucide-react";
 import { useState } from "react";
-import { FaCogs, FaCode, FaMobileAlt, FaServer } from "react-icons/fa";
+import { SectionLabel } from "./ui";
 
-const servicesData = [
+const services = [
   {
-    icon: <FaCogs />,
     title: "Software Engineering",
-    desc: "Architect and build scalable software solutions with maintainable code and high-quality standards. I love solving complex problems and optimizing workflows.",
+    description:
+      "End-to-end product builds, from the first sketch to production. Clean architecture, maintainable code, and decisions that age well.",
+    tags: ["Architecture", "Performance", "Maintenance"],
   },
   {
-    icon: <FaCode />,
     title: "Web Development",
-    desc: "Build responsive, dynamic web applications using ReactJS, TailwindCSS, and modern frameworks. Seamless performance, accessibility, and scalability guaranteed.",
+    description:
+      "Fast, responsive web apps built with React, TypeScript, and Tailwind CSS — interfaces that feel as good as they look.",
+    tags: ["React", "TypeScript", "Tailwind CSS"],
   },
   {
-    icon: <FaMobileAlt />,
     title: "Mobile Development",
-    desc: "Craft sleek mobile experiences using React Native. Focused on intuitive UI/UX while complementing full-stack web solutions.",
+    description:
+      "Cross-platform mobile experiences with React Native, designed for small screens and real-world use.",
+    tags: ["React Native", "iOS & Android", "UI/UX"],
   },
   {
-    icon: <FaServer />,
     title: "Backend Development",
-    desc: "Develop robust server-side architectures using NodeJS & ExpressJS. APIs are secure, efficient, and scalable—even when backend is secondary.",
+    description:
+      "Secure APIs and server-side systems with Node.js and Express, built to scale with the product they support.",
+    tags: ["Node.js", "Express", "REST APIs"],
   },
 ];
 
-const Services = () => {
+type ServiceItemProps = {
+  index: number;
+  title: string;
+  description: string;
+  tags: string[];
+  open: boolean;
+  onToggle: () => void;
+};
 
-  // Generate particle positions once on mount
-  const [particlePositions] = useState(() =>
-    Array.from({ length: 10 }).map(() => ({
-      top: Math.random() * 100,
-      left: Math.random() * 100,
-    }))
-  );
+function ServiceItem({ index, title, description, tags, open, onToggle }: ServiceItemProps) {
+  const reduceMotion = useReducedMotion();
+  const panelId = `service-panel-${index}`;
 
   return (
-    <section
-      id="services"
-      className="relative py-28 overflow-hidden bg-gradient-to-b from-[#0a0a0a] via-[#120a20] to-[#0a0a0a] text-white"
-    >
-      {/* Animated floating particles */}
-      {particlePositions.map((position, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 rounded-full bg-purple-500 opacity-50"
-          animate={{ y: [0, -20, 0], x: [0, 20, 0] }}
-          transition={{
-            duration: 8 + i,
-            repeat: Infinity,
-            repeatType: "mirror",
-            delay: i * 0.3,
-          }}
-          style={{ top: `${position.top}%`, left: `${position.left}%` }}
-        />
-      ))}
-
-      <h1 className="text-4xl md:text-6xl font-extrabold text-center mb-16 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-purple-700">
-        WHAT I DO
-      </h1>
-
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 justify-center items-start gap-10 max-w-7xl mx-auto px-6 relative z-10">
-        {servicesData.map((service, index) => (
-          <motion.div
-            key={index}
-            whileHover={{ scale: 1.05, rotate: 2 }}
-            whileTap={{ scale: 0.95, rotate: -2 }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-            className="service-card relative flex-1 bg-purple-900/20 backdrop-blur-xl border border-purple-700/40 rounded-3xl sm:p-8 p-4 shadow-2xl hover:shadow-purple-700/50 transition-all duration-500 cursor-pointer"
+    <div className="border-t border-line last:border-b">
+      <h3>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={panelId}
+          onClick={onToggle}
+          className="group flex w-full items-center gap-5 py-6 text-left"
+        >
+          <span className="font-mono text-[11px] tracking-[0.2em] text-muted">0{index + 1}</span>
+          <span
+            className={`flex-1 font-display text-3xl transition-colors duration-300 sm:text-4xl ${
+              open ? "text-acid" : "text-bone group-hover:text-acid"
+            }`}
           >
-            <div className="text-purple-400 text-5xl mb-6 flex justify-center">
-              {service.icon}
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-purple-300">
-              {service.title}
-            </h2>
-            <p className="text-gray-300 leading-relaxed text-center">{service.desc}</p>
-          </motion.div>
-        ))}
-      </div>
+            {title}
+          </span>
+          <span
+            aria-hidden="true"
+            className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${
+              open
+                ? "border-acid bg-acid text-ink"
+                : "border-line text-muted group-hover:border-acid group-hover:text-acid"
+            }`}
+          >
+            {open ? <Minus size={16} /> : <Plus size={16} />}
+          </span>
+        </button>
+      </h3>
 
-      {/* Optional floating abstract shapes */}
-      <div className="absolute top-[-100px] left-[-100px] w-[300px] h-[300px] rounded-full bg-purple-600/20 blur-3xl animate-blob"></div>
-      <div className="absolute bottom-[-120px] right-[-150px] w-[400px] h-[400px] rounded-full bg-purple-700/30 blur-3xl animate-blob animation-delay-2000"></div>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            id={panelId}
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pb-7 pl-9 sm:pl-12">
+              <p className="max-w-xl leading-relaxed text-muted">{description}</p>
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {tags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-full border border-line px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-muted"
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function Services() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  return (
+    <section id="services" aria-labelledby="services-heading" className="border-t border-line py-24 sm:py-32">
+      <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-4">
+          <div className="lg:sticky lg:top-32">
+            <SectionLabel number="02" title="Services" />
+            <h2
+              id="services-heading"
+              className="mt-6 font-display text-4xl leading-[0.95] sm:text-5xl lg:text-[3.4rem]"
+            >
+              What I bring to the table.
+            </h2>
+            <p className="mt-6 max-w-sm leading-relaxed text-muted">
+              From the first commit to the final deploy, I cover the full product surface — and the
+              parts in between.
+            </p>
+            <a
+              href="#contact"
+              className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-acid transition-opacity duration-300 hover:opacity-70"
+            >
+              Discuss a project
+              <ArrowUpRight aria-hidden="true" size={16} />
+            </a>
+          </div>
+        </div>
+
+        <div className="lg:col-span-8">
+          {services.map((service, index) => (
+            <ServiceItem
+              key={service.title}
+              index={index}
+              title={service.title}
+              description={service.description}
+              tags={service.tags}
+              open={openIndex === index}
+              onToggle={() => setOpenIndex((current) => (current === index ? null : index))}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   );
-};
+}
 
 export default Services;
