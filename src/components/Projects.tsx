@@ -99,7 +99,7 @@ const projects: Project[] = [
     img: richSterling,
     width: 1600,
     height: 801,
-    link: "https://www.richsterlinghires.com/",
+    link: "https://rich-sterling-hires.vercel.app/",
   },
   {
     title: "TMBIS Switzerland",
