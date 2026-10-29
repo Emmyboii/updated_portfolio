@@ -1,8 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
-import philomena from "../assets/work/philomena.jpg";
-import philomenaLive from "../assets/work/philomena-live.jpg";
+import philomena from "../assets/work/philomena.png";
+import philomenaLive from "../assets/work/philomena-live.png";
 import abprint from "../assets/work/abprint.jpg";
-import niftium from "../assets/work/niftium.jpg";
+import niftium from "../assets/work/niftium.png";
 import emmybuy from "../assets/work/emmybuy.jpg";
 import reccur from "../assets/work/reccur.jpg";
 import americanMilestone from "../assets/work/american-milestone.jpg";
