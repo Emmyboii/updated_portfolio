@@ -1,6 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import philomena from "../assets/work/philomena.png";
-import philomenaLive from "../assets/work/philomena-live.png";
+import philomenaLive from "../assets/work/philomenaLive.png";
 import abprint from "../assets/work/abprint.jpg";
 import niftium from "../assets/work/niftium.png";
 import emmybuy from "../assets/work/emmybuy.jpg";
